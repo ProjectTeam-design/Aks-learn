@@ -1,54 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AKS Learn App</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <title>AKS Learn</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>AKS Learn</h1>
+  <!-- صفحة 1: Welcome -->
+  <div class="app" id="welcomeScreen">
+    <div class="card">
+      <div class="logo">🎓</div>
 
-        <!-- نموذج تسجيل الدخول -->
-        <div id="login-form">
-            <h2>Login</h2>
-            <input type="text" id="username" placeholder="Username">
-            <select id="role">
-                <option value="teacher">Teacher</option>
-                <option value="student">Student</option>
-            </select>
-            <button onclick="login()">Login</button>
-        </div>
+      <h1>Welcome to<br>AKS Learn</h1>
 
-        <!-- لوحة التحكم -->
-        <div id="dashboard" style="display:none;">
-            <h2>Dashboard</h2>
-            <p id="welcome-msg"></p>
+      <button class="btn teacher" id="teacherBtn">Teacher Login</button>
+      <button class="btn student" id="studentBtn">Student Login</button>
 
-            <!-- قسم المعلم -->
-            <div id="teacher-panel" style="display:none;">
-                <h3>Teacher Panel</h3>
-                <textarea id="announcement" placeholder="Write announcement..."></textarea>
-                <button onclick="postAnnouncement()">Post Announcement</button>
-                <h4>Announcements:</h4>
-                <ul id="announcements-list"></ul>
-            </div>
+      <p class="small-link" id="goCreate">Create an account</p>
+      <p class="small-link">Need help? Contact admin</p>
 
-            <!-- قسم الطالب -->
-            <div id="student-panel" style="display:none;">
-                <h3>Student Panel</h3>
-                <h4>Announcements:</h4>
-                <ul id="student-announcements"></ul>
-            </div>
-
-            <button onclick="logout()">Logout</button>
-        </div>
+      <p id="message" class="message"></p>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- صفحة 2: اختيار الدور والمستوى -->
+  <div class="app" id="selectScreen">
+    <div class="card">
+      <h2 class="title">Welcome, Student or Teacher</h2>
+
+      <label class="field-label">Role</label>
+      <select class="select-box" id="roleSelect">
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+
+      <label class="field-label">Level</label>
+      <select class="select-box" id="levelSelect">
+        <option>1st year License</option>
+        <option>2nd year License</option>
+        <option>3rd year License</option>
+        <option>Master 1</option>
+        <option>Master 2</option>
+      </select>
+
+      <button class="btn teacher" id="submitLevel">Submit</button>
+
+      <p class="small-link" id="goCreate2">Don't have an account? Create one</p>
+    </div>
+  </div>
+
+  <!-- صفحة 3: Create Account -->
+  <div class="app" id="createScreen">
+    <div class="card">
+      <h2 class="title">Create Account</h2>
+
+      <input type="text" class="input-box" id="firstName" placeholder="First Name">
+      <input type="text" class="input-box" id="lastName" placeholder="Last Name">
+      <input type="email" class="input-box" id="email" placeholder="Email">
+      <input type="password" class="input-box" id="password" placeholder="Password">
+
+      <button class="btn student" id="createBtn">Create Account</button>
+
+      <p class="small-link" id="backWelcome">Already have an account? Login</p>
+      <p id="createMsg" class="message"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
+
+
+
+
 
 
 

@@ -1,67 +1,58 @@
-let currentUser = null;
-let currentRole = null;
+// الصفحات
+const welcomeScreen = document.getElementById("welcomeScreen");
+const selectScreen  = document.getElementById("selectScreen");
+const createScreen  = document.getElementById("createScreen");
 
-let announcements = JSON.parse(localStorage.getItem("announcements")) || [];
+// أزرار الصفحة 1
+const teacherBtn = document.getElementById("teacherBtn");
+const studentBtn = document.getElementById("studentBtn");
+const goCreate   = document.getElementById("goCreate");
+const message    = document.getElementById("message");
 
-function login() {
-    const username = document.getElementById("username").value.trim();
-    const role = document.getElementById("role").value;
+// أزرار الصفحة 2
+const submitLevel = document.getElementById("submitLevel");
+const goCreate2   = document.getElementById("goCreate2");
+const roleSelect  = document.getElementById("roleSelect");
+const levelSelect = document.getElementById("levelSelect");
 
-    if (username === "") {
-        alert("Please enter your username!");
-        return;
-    }
+// أزرار الصفحة 3
+const createBtn   = document.getElementById("createBtn");
+const backWelcome = document.getElementById("backWelcome");
+const createMsg   = document.getElementById("createMsg");
 
-    currentUser = username;
-    currentRole = role;
+// دالة تعرض صفحة واحدة فقط
+function showScreen(screen) {
+  welcomeScreen.style.display = "none";
+  selectScreen.style.display  = "none";
+  createScreen.style.display  = "none";
 
-    document.getElementById("login-form").style.display = "none";
-    document.getElementById("dashboard").style.display = "block";
-    document.getElementById("welcome-msg").innerText = `Welcome, ${currentUser}!`;
-
-    if (role === "teacher") {
-        document.getElementById("teacher-panel").style.display = "block";
-        document.getElementById("student-panel").style.display = "none";
-    } else {
-        document.getElementById("teacher-panel").style.display = "none";
-        document.getElementById("student-panel").style.display = "block";
-    }
-
-    updateAnnouncements();
+  screen.style.display = "flex";
 }
 
-function logout() {
-    currentUser = null;
-    currentRole = null;
-    document.getElementById("login-form").style.display = "block";
-    document.getElementById("dashboard").style.display = "none";
-}
+// نبدأ بصفحة 1
+showScreen(welcomeScreen);
 
-function postAnnouncement() {
-    const text = document.getElementById("announcement").value.trim();
-    if (text === "") return;
+// من صفحة 1 → صفحة 2
+teacherBtn.addEventListener("click", () => showScreen(selectScreen));
+studentBtn.addEventListener("click", () => showScreen(selectScreen));
 
-    announcements.push({ user: currentUser, text: text });
-    localStorage.setItem("announcements", JSON.stringify(announcements));
+// من صفحة 1 أو 2 → صفحة 3
+goCreate.addEventListener("click", () => showScreen(createScreen));
+goCreate2.addEventListener("click", () => showScreen(createScreen));
 
-    document.getElementById("announcement").value = "";
-    updateAnnouncements();
-}
+// من صفحة 3 → صفحة 1
+backWelcome.addEventListener("click", () => showScreen(welcomeScreen));
 
-function updateAnnouncements() {
-    const teacherList = document.getElementById("announcements-list");
-    const studentList = document.getElementById("student-announcements");
+// زر Submit في صفحة 2: يقرأ الدور والمستوى
+submitLevel.addEventListener("click", () => {
+  const role  = roleSelect.value;
+  const level = levelSelect.value;
+  message.textContent = `Selected: ${role} - ${level}.`;
+  showScreen(welcomeScreen); // مؤقتاً نرجع لواجهة الترحيب
+});
 
-    teacherList.innerHTML = "";
-    studentList.innerHTML = "";
+// زر Create Account (تجريب فقط)
+createBtn.addEventListener("click", () => {
+  createMsg.textContent = "Account created (demo). You can now login.";
+});
 
-    announcements.forEach(a => {
-        const liTeacher = document.createElement("li");
-        liTeacher.innerText = `${a.user}: ${a.text}`;
-        teacherList.appendChild(liTeacher);
-
-        const liStudent = document.createElement("li");
-        liStudent.innerText = `${a.user}: ${a.text}`;
-        studentList.appendChild(liStudent);
-    });
-}
